@@ -17,6 +17,7 @@
 
 
 
+
         static void DrawHanger()
         {
             Console.WriteLine("  +---+\r\n  |   |\r\n      |\r\n      |\r\n      |\r\n      |\r\n=========");
