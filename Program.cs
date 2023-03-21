@@ -6,11 +6,26 @@
         {
             string word = "C O M P U T E R";
             string displayWord = "_ _ _ _ _ _ _ _";
+            string guess;
             int wrongGuesses = 0;
             bool done = false;
             DrawHanger();
             Console.WriteLine(word);
             Console.WriteLine(displayWord);
+
+            while (!done)
+            {
+                Console.Write("Pick a letter:  ");
+                guess = Console.ReadLine().ToUpper();
+
+                if (word.Contains(guess))
+                {
+
+                    Console.WriteLine(displayWord);
+
+                }
+
+            }
         }
 
 
