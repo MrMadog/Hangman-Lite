@@ -4,28 +4,70 @@
     {
         static void Main(string[] args)
         {
-            string word = "C O M P U T E R";
-            string displayWord = "_ _ _ _ _ _ _ _";
+            string word = "COMPUTER";
+            string displayWord = "________";
             string guess;
             int wrongGuesses = 0;
+            int totalGuesses = 0;
             bool done = false;
-            DrawHanger();
-            Console.WriteLine(word);
+
+
             Console.WriteLine(displayWord);
+            Console.WriteLine();
 
             while (!done)
             {
                 Console.Write("Pick a letter:  ");
                 guess = Console.ReadLine().ToUpper();
 
-                if (word.Contains(guess))
+
+                if (guess.Length == 1)
                 {
+                    if (word.Contains(guess))
+                    {
+                        displayWord = displayWord.Remove(word.IndexOf(guess), 1);
+                        displayWord = displayWord.Insert(word.IndexOf(guess), guess);
+                    }
+                    else
+                    {
+                        wrongGuesses++;
+                    }
+
+                    totalGuesses++;
+
+                    switch (wrongGuesses) 
+                    {
+                        case 1: DrawHanger(); break;
+                        case 2: DrawHead(); break;
+                        case 3: DrawArmL(); break;
+                        case 4: DrawArmR(); break;
+                        case 5: DrawLegL(); break;
+                        case 6: DrawLegR(); break;
+                        case 7: DrawDead(); break;
+                    }
 
                     Console.WriteLine(displayWord);
-
+                }
+                else
+                {
+                    Console.WriteLine("You can only guess one letter at a time! ");
                 }
 
+                if (displayWord == word)
+                {
+                    Console.WriteLine("You guessed the word correctly! ");
+                    done = true;
+                }
+
+                if (wrongGuesses == 7)
+                {
+                    Console.WriteLine("You died! ");
+                    done = true;
+                }
             }
+
+            Console.WriteLine($"Your wrong guesses: {wrongGuesses} ");
+            Console.WriteLine($"Your total guesses: {totalGuesses} ");
         }
 
 
