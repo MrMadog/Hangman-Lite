@@ -5,3 +5,7 @@
 	- Levels: Easy = 3-4 letters
 		  Medium = 5-7 letters
 		  Hard = 8+ letters
+
+	- dont forget to check for >3 or <0 on difficulty select
+
+	- 
