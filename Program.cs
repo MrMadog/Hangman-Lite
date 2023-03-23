@@ -13,8 +13,6 @@
             int wrongGuesses = 0;
             int totalGuesses = 0;
             bool done = false;
-
-            //words: ENGINE, HOUSEPLANT, RODGERS, DISCOVERY, VIEW, DESK, MEDAL
             
             Console.WriteLine();
             Console.WriteLine("  HANGMAN LITE");

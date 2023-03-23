@@ -1,0 +1,7 @@
+
+
+			Ideas
+
+	- Levels: Easy = 3-4 letters
+		  Medium = 5-7 letters
+		  Hard = 8+ letters
