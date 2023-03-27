@@ -7,30 +7,33 @@
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Clear();
-            string word = "C O M P U T E R";
+            string word = "";
             string displayWord = "_ _ _ _ _ _ _ _";
             string guess;
             int wrongGuesses = 0;
             int totalGuesses = 0;
+            int difficulty = 0;
             bool done = false;
-            
+            List<string> words = new List<string>();
+
             Console.WriteLine();
             Console.WriteLine("  HANGMAN LITE");
-            Thread.Sleep(1000);
+            Wait10();
+
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("How to Play: ");
-            Thread.Sleep(500);
+            Wait5();
             Console.WriteLine();
             Console.WriteLine(" You are to continuously guess letters until you discover the entire word. ");
-            Thread.Sleep(2000);
+            Wait20();
             Console.WriteLine(" After each guess, you will be told whether it is correct or incorrect. ");
-            Thread.Sleep(2000);
+            Wait20();
             Console.WriteLine(" If the letter you guessed is not in the word, a limb is drawn on the man. ");
-            Thread.Sleep(2000);
+            Wait20();
             Console.WriteLine(" After enough wrong guesses, the man will die and you LOSE. ");
-            Thread.Sleep(2000);
-
+            Wait20();
+            
             Console.WriteLine();
             Console.Write("Press ENTER to begin ");
             Console.ReadLine();
@@ -44,6 +47,32 @@
 
             while (!done)
             {
+                Console.WriteLine("What difficulty would you like? ");
+                Console.WriteLine("1 - Easy ");
+                Console.WriteLine("2 - Medium ");
+                Console.WriteLine("3 - Hard ");
+                Console.Write("Difficulty:  ");
+                difficulty = Convert.ToInt32(Console.ReadLine());
+
+                var easyWords = File.ReadAllLines("Easy Words.txt");
+                var mediumWords = File.ReadAllLines("Medium Words.txt");
+                var hardWords = File.ReadAllLines("Hard Words.txt");
+
+                switch (difficulty)
+                {
+                    case 1: Console.WriteLine("Difficulty set to: Easy ");
+                        foreach (var s in easyWords)
+                            words.Add(s); break;
+                    case 2: Console.WriteLine("Difficulty set to: Medium ");
+                        foreach (var s in mediumWords)
+                            words.Add(s); break;
+                    case 3: Console.WriteLine("Difficulty set to: Hard ");
+                        foreach (var s in hardWords) 
+                            words.Add(s); break;
+                }
+                Console.WriteLine(words[0] + words[1]);
+
+
                 Console.Write("Pick a letter:  ");
                 guess = Console.ReadLine().ToUpper();
 
@@ -52,21 +81,21 @@
                 {
                     if (word.Contains(guess))
                     {
-                        Thread.Sleep(500);
+                        Wait5();
                         Console.WriteLine();
                         Console.WriteLine("That letter IS in the word! ");
                         Console.WriteLine();
-                        Thread.Sleep(500);
+                        Wait5();
                         displayWord = displayWord.Remove(word.IndexOf(guess), 1);
                         displayWord = displayWord.Insert(word.IndexOf(guess), guess);
                     }
                     else
                     {
-                        Thread.Sleep(500);
+                        Wait5();
                         Console.WriteLine();
                         Console.WriteLine("That letter is NOT in the word! ");
                         Console.WriteLine();
-                        Thread.Sleep(500);
+                        Wait5();
                         wrongGuesses++;
                     }
 
@@ -83,15 +112,15 @@
 
                     Console.WriteLine(displayWord);
                     Console.WriteLine();
-                    Thread.Sleep(1000);
+                    Wait10();
                 }
                 else
                 {
-                    Thread.Sleep(500);
+                    Wait5();
                     Console.WriteLine();
                     Console.WriteLine("You can only guess one letter at a time! ");
                     Console.WriteLine();
-                    Thread.Sleep(500);
+                    Wait5();
                 }
 
                 if (displayWord == word)
@@ -99,7 +128,7 @@
                     DrawWin();
                     Console.WriteLine("You guessed the word correctly and saved the man! ");
                     Console.WriteLine();
-                    Thread.Sleep(1500);
+                    Wait20();
                     done = true;
                 }
 
@@ -108,7 +137,7 @@
                     Console.WriteLine("You died! ");
                     Console.WriteLine($"The word was {word}! ");
                     Console.WriteLine();
-                    Thread.Sleep(1500);
+                    Wait20();
                     done = true;
                 }
             }
@@ -153,6 +182,18 @@
         static void DrawWin()
         {
             Console.WriteLine("  +---+\r\n      |\r\n      | \r\n \\O/  |\r\n  |   |\r\n / \\  |\r\n=========");
+        }
+        static void Wait5()
+        {
+            Thread.Sleep(500);
+        }
+        static void Wait10()
+        {
+            Thread.Sleep(1000);
+        }
+        static void Wait20()
+        {
+            Thread.Sleep(2000);
         }
     }
 }
