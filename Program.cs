@@ -1,4 +1,6 @@
-﻿namespace Hangman_Lite
+﻿using System.Dynamic;
+
+namespace Hangman_Lite
 {
     internal class Program
     {
@@ -10,20 +12,20 @@
             Random rand = new Random();
             string word = "";
             string displayWord = "";
-            string guess;
-            string replay;
+            string guess, replay, tempWord;
             int wrongGuesses = 0;
             int totalGuesses = 0;
             int difficulty = 0;
             bool done = false;
             bool done1 = false;
+            bool done2 = false;
             List<string> words = new List<string>();
             List<string> wrongLetters = new List<string>();
 
             Console.WriteLine();
             Console.WriteLine("  HANGMAN LITE");
             Wait10();
-
+            
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("How to Play: ");
@@ -56,7 +58,14 @@
                 Console.WriteLine("2 - Medium ");
                 Console.WriteLine("3 - Hard ");
                 Console.Write("Difficulty:  ");
-                difficulty = Convert.ToInt32(Console.ReadLine());
+
+                while (!Int32.TryParse(Console.ReadLine(), out difficulty))
+                    Console.Write("Difficulty:  ");
+
+                if (difficulty > 3)
+                    difficulty = 3;
+                else if (difficulty < 1)
+                    difficulty = 1;
 
                 var easyWords = File.ReadAllLines("Easy Words.txt");
                 var mediumWords = File.ReadAllLines("Medium Words.txt");
@@ -65,19 +74,19 @@
                 switch (difficulty)
                 {
                     case 1:
-                        Console.WriteLine("Difficulty set to: Easy ");
+                        Console.WriteLine("Difficulty set to: EASY ");
                         foreach (var s in easyWords)
                             words.Add(s); break;
                     case 2:
-                        Console.WriteLine("Difficulty set to: Medium ");
+                        Console.WriteLine("Difficulty set to: MEDIUM ");
                         foreach (var s in mediumWords)
                             words.Add(s); break;
                     case 3:
-                        Console.WriteLine("Difficulty set to: Hard ");
+                        Console.WriteLine("Difficulty set to: HARD ");
                         foreach (var s in hardWords)
                             words.Add(s); break;
-                    default: 
-                        Console.WriteLine("That is not an option! ")
+                    default:
+                        Console.WriteLine("That is not an option! "); break;
                 }
 
                 word = words[rand.Next(0, words.Count)];
@@ -89,6 +98,9 @@
                     else
                         displayWord = displayWord.Insert(i, "_");
                 }
+
+                tempWord = word;
+
 
                 Wait5();
                 Console.WriteLine();
@@ -105,13 +117,18 @@
                     {
                         if (word.Contains(guess))
                         {
-                            Wait5();
-                            Console.WriteLine();
-                            Console.WriteLine("That letter IS in the word! ");
-                            Console.WriteLine();
-                            Wait5();
-                            displayWord = displayWord.Remove(word.IndexOf(guess), 1);
-                            displayWord = displayWord.Insert(word.IndexOf(guess), guess);
+                            do
+                            {
+                                Wait5();
+                                Console.WriteLine();
+                                Console.WriteLine("That letter IS in the word! ");
+                                Console.WriteLine();
+                                Wait5();
+                                displayWord = displayWord.Remove(word.IndexOf(guess), 1);
+                                displayWord = displayWord.Insert(word.IndexOf(guess), guess);
+                                done2 = true;
+                            } while(!done2);
+                        
                         }
                         else
                         {
@@ -189,8 +206,25 @@
                 else if (replay == "Q" || replay == "N" || replay == "NO")
                 {
                     Console.WriteLine("Quitting... ");
+                    Wait10();
                     done1 = true;
                 }
+                else
+                {
+                    Console.WriteLine("Quitting... ");
+                    Wait10();
+                    done1 = true;
+                }
+                
+
+        //Resetting all stats
+                words.Clear();
+                wrongLetters.Clear();
+                displayWord = "";
+                word = "";
+                totalGuesses = 0;
+                done = false;
+
             } while (!done1);
         }
 
