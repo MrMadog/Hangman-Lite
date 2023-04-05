@@ -8,6 +8,4 @@
 
 	- dont forget to check for >3 or <0 on difficulty select
 
-	- Allow duplicate letters
-
 	- 

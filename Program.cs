@@ -117,18 +117,13 @@ namespace Hangman_Lite
                     {
                         if (word.Contains(guess))
                         {
-                            do
-                            {
-                                Wait5();
-                                Console.WriteLine();
-                                Console.WriteLine("That letter IS in the word! ");
-                                Console.WriteLine();
-                                Wait5();
-                                displayWord = displayWord.Remove(word.IndexOf(guess), 1);
-                                displayWord = displayWord.Insert(word.IndexOf(guess), guess);
-                                done2 = true;
-                            } while(!done2);
-                        
+                            Wait5();
+                            Console.WriteLine();
+                            Console.WriteLine("That letter IS in the word! ");
+                            Console.WriteLine();
+                            Wait5();
+                            displayWord = displayWord.Remove(word.IndexOf(guess), 1);
+                            displayWord = displayWord.Insert(word.IndexOf(guess), guess);  
                         }
                         else
                         {
